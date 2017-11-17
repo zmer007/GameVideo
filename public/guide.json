@@ -1,0 +1,31 @@
+[{
+    "span": {
+      "start": 0,
+      "end": 2
+    },
+    "event": [{
+        "block": [0, 0, 100, 100],
+        "action": "click"
+      },
+      {
+        "block": [0, 300, 100, 100],
+        "action": "click"
+      }
+    ]
+  },
+  {
+    "span": {
+      "start": 4,
+      "end": 7
+    },
+    "event": [{
+        "block": [0, 0, 100, 100],
+        "action": "swipe-left"
+      },
+      {
+        "block": [0, 300, 100, 100],
+        "action": "swipe-right"
+      }
+    ]
+  }
+]

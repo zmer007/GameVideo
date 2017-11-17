@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#game-video {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+}
+
+#gesture-layer {
+  position: absolute;
+  width: 100vw;
+  height: 50vh;
+  margin-top: 20vh;
+  text-align: center;
+  background-color: #86d32f;
+}
