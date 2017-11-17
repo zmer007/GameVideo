@@ -8,24 +8,24 @@ $(document).ready(function () {
     $("#gesture-layer").on("touchmove", actionMove);
     $("#gesture-layer").on("touchend", actionEnd);
 
-    $("#game-video").click(function () {
-        $("#gesture-info").text(guideData[1].span.end);
-    });
+    $(".game-video").on("timeupdate", videoTimeUpdate);
 });
 
 $.getJSON("guide.json", function (data) {
     guideData = data;
 })
 
+function videoTimeUpdate(event){
+    console.log("hello: " + this.currentTime + ": "+ this.ended);
+}
+
 function actionDown(event) {
-    console.log(event.touches[0].clientX);
     xDown = event.touches[0].clientX;
     yDown = event.touches[0].clientY;
     event.preventDefault();
 }
 
 function actionMove(event) {
-    console.log(event.touches[0].clientX);
     if (!xDown || !yDown) {
         return;
     }
@@ -42,7 +42,7 @@ function actionMove(event) {
         } else {
             onSwipeRight(xDown, yDown);
         }
-    } else if(Math.abs(xDiff) < Math.abs(yDiff)){
+    } else if (Math.abs(xDiff) < Math.abs(yDiff)) {
         if (yDiff > 0) {
             onSwipeUp(xDown, yDown);
         } else {
@@ -54,18 +54,18 @@ function actionMove(event) {
 function actionEnd(event) {
     var xUp = event.changedTouches[0].pageX;
     var yUp = event.changedTouches[0].pageY;
-    if(xUp == xDown && yUp == yDown){
+    if (xUp == xDown && yUp == yDown) {
         onClicked(xDown, yDown);
     }
     xDown = null;
     yDown = null;
 }
 
-function onClicked(originX, originY){
+function onClicked(originX, originY) {
     $("#gesture-info").text("clicked (" + originX + ", " + originY + ")");
 }
 
-function onSwipeLeft(originX, originY){
+function onSwipeLeft(originX, originY) {
     $("#gesture-info").text("left swipe (" + originX + ", " + originY + ")");
 }
 

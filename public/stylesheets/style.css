@@ -3,18 +3,25 @@
   padding: 0;
 }
 
-#game-video {
+body {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: -100;
+}
+
+.game-video {
+  position: absolute;
+  width: 100vh;
+  height: 100vw;
+  margin-top: -100vw;
+  -webkit-transform-origin: bottom left;
+  transform-origin: bottom left;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  z-index: -1;
 }
 
 #gesture-layer {
   position: absolute;
   width: 100vw;
-  height: 50vh;
-  margin-top: 20vh;
-  text-align: center;
-  background-color: #86d32f;
+  height: 100vw;
+  z-index: 1;
 }
