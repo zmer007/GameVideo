@@ -4,17 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="javascripts/jquery-3.2.1.js"></script>
-    <script src="javascripts/main.js"></script>
-    <link rel="stylesheet" href="stylesheets/style.css">
-    <title>Playable Video</title>
+    <script src="jquery-3.2.1.js"></script>
+    <script src="main.js"></script>
+    <script src="zprf.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <p id="gesture-info" style="position:absolute; width:100vw">There is gesture layer</p>
-    <video class="game-video" src="images/small.mp4" poster="images/poster.jpg"></video>
-    <div id="gesture-layer"></div>
+    <audio id="my-audio" src="bgm.mp3" autoplay loop></audio>
+    <div class="screen">
+        <video id="my-video" class="portrait-video" ondurationchange="durationchange()" src="small.mp4" autoplay></video>
+        <div id="gesture-layer"></div>
+    </div>
+
+    <span id="info" style="position:absolute, font-color='#ffffff', z-index='1000'">info:</span>
+    <script>
+        function playVideo(){
+            $('#my-video')[0].play();
+            $('#my-audio')[0].play();
+        }
+
+        function durationchange() {
+            window.android.startVideo();
+        }
+    </script>
 </body>
 
 </html>
