@@ -24,10 +24,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
     video = document.getElementById('my-video');
-    video.addEventListener('durationchange', () => {
+    // 此处不能使用lambda () => 结构的表示闭包，因为iOS 9及以下不支持。
+    video.addEventListener('durationchange', function() {
         guides = data;
         restoreData(window.screen.width, window.screen.height, video.duration)
-        window.android.startVideo();
+        try {
+            // iOS
+            webkit.messageHandlers.playable.postMessage('readyToPlay');
+
+            // Android
+            window.android.startVideo();
+        } catch (err) {
+            console.log(`The client hasn't "android.startVideo()" function or "playable.readyToPlay" event.`);
+        }
     })
 });
 
@@ -186,5 +195,5 @@ function resetDwonXY() {
 }
 
 function log(msg) {
-    $('#info').text(msg);
+    document.getElementById('info').innerHTML = msg;
 }
