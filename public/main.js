@@ -9,10 +9,13 @@ var actionAble = false;
 
 var guides = null;
 
+var infoText = null;
+
 
 document.addEventListener("DOMContentLoaded", function (event) {
     //do work
     gestureLayer = document.getElementById("gesture-layer");
+    infoText = document.getElementById('info');
 
     gestureLayer.addEventListener('mousedown', onDown);
     gestureLayer.addEventListener('mousemove', onMove);
@@ -25,17 +28,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     video = document.getElementById('my-video');
     // 此处不能使用lambda () => 结构的表示闭包，因为iOS 9及以下不支持。
-    video.addEventListener('durationchange', function() {
-        guides = data;
+    video.addEventListener('durationchange', function () {
+        guides = data.ctrl;
+        console.log(guides)
+        if (data.screenOrientation == 'landscape'){
+            video.className = 'landscape-video';
+        }else {
+            video.className = 'portrait-video';
+        }
         restoreData(window.screen.width, window.screen.height, video.duration)
         try {
             // iOS
             webkit.messageHandlers.playable.postMessage('readyToPlay');
+        }catch(err){
+            console.log(`The client hasn't "playable.readyToPlay" event.`);
+        }
 
+        try{
             // Android
             window.android.startVideo();
         } catch (err) {
-            console.log(`The client hasn't "android.startVideo()" function or "playable.readyToPlay" event.`);
+            log('errrrr');
+            console.log(`The client hasn't "android.startVideo()" function`);
         }
     })
 });
@@ -85,33 +99,44 @@ function refreshFrame() {
 }
 
 function onClicked() {
-    log('click')
+    log('onClicked: NO')
+    console.log(downX, downY)
+    console.log(cursor.event[0].block)
     if (actionAble && !cursor.passed && cursor.event[0].action[4]) {
+        log('onClicked: YES')
         passCursor();
     }
 }
 
 function onSwipeLeft() {
+    log('onSwipeLeft: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[3]) {
+        log('onSwipeLeft: YES');
         passCursor();
     }
 }
 
 function onSwipeUp() {
+    log('onSwipeUp: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[1]) {
+        log('onSwipeUp: YES');
         passCursor();
     }
 }
 
 function onSwipeRight() {
+    log('onSwipeRight: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[5]) {
+        log('onSwipeRight: YES');
         passCursor();
     }
 }
 
 
 function onSwipeDown() {
+    log('onSwipeDown: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[7]) {
+        log('onSwipeDown: YES');
         passCursor();
     }
 }
@@ -195,5 +220,8 @@ function resetDwonXY() {
 }
 
 function log(msg) {
-    document.getElementById('info').innerHTML = msg;
+    if (!infoText) {
+        infoText = document.getElementById('info');
+    }
+    infoText.innerHTML = msg;
 }
