@@ -4,16 +4,14 @@ var downY = null;
 var video = null;
 var gestureLayer = null;
 
+var guides = null;
 var cursor = null;
 var actionAble = false;
 
-var guides = null;
-
 var infoText = null;
 
-
 document.addEventListener("DOMContentLoaded", function (event) {
-    //do work
+
     gestureLayer = document.getElementById("gesture-layer");
     infoText = document.getElementById('info');
 
@@ -25,31 +23,34 @@ document.addEventListener("DOMContentLoaded", function (event) {
     gestureLayer.addEventListener('touchmove', onTouchMove);
     gestureLayer.addEventListener('touchend', onTouchEnd);
 
-
     video = document.getElementById('my-video');
     // 此处不能使用lambda () => 结构的表示闭包，因为iOS 9及以下不支持。
-    video.addEventListener('durationchange', function () {
+    video.addEventListener('loadstart', function () {
+        // 不全用durationchange监听方法，因为在Android 4.4（vivo）手机上会执行两次，第一次video duration为100，第二次正常值。
+        // 为避免以后出现类似的问题，使用loadstart监听，并在配置文件中携带videoDuration值。
         guides = data.ctrl;
-        console.log(guides)
         if (data.screenOrientation == 'landscape'){
             video.className = 'landscape-video';
         }else {
             video.className = 'portrait-video';
         }
-        restoreData(window.screen.width, window.screen.height, video.duration)
+
+        restoreData(window.screen.width, window.screen.height, data.videoDuration)
+
         try {
             // iOS
             webkit.messageHandlers.playable.postMessage('readyToPlay');
-        }catch(err){
-            console.log(`The client hasn't "playable.readyToPlay" event.`);
+        }catch(e){
+            // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
+            // console.log(`The client hasn't "playable.readyToPlay" event.`);
         }
 
         try{
             // Android
             window.android.startVideo();
-        } catch (err) {
-            log('errrrr');
-            console.log(`The client hasn't "android.startVideo()" function`);
+        } catch (e) {
+            // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
+            // console.log(`The client hasn't "android.startVideo()" function`);
         }
     })
 });
@@ -131,7 +132,6 @@ function onSwipeRight() {
         passCursor();
     }
 }
-
 
 function onSwipeDown() {
     log('onSwipeDown: NO');

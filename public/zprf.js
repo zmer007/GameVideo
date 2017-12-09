@@ -1,5 +1,6 @@
 data = {
     "screenOrientation": "landscape",
+    "videoDuration": 31.2,
     "ctrl": [{
         "id": 0,
         "span": {
