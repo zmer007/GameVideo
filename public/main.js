@@ -77,7 +77,12 @@ function restoreData(screenWidth, screenHeight, videoDuration) {
 refreshFrame();
 
 function refreshFrame() {
+    if(video && video.ended){
+        window.location.href = 'land-page.html';
+        return;
+    }
     requestAnimationFrame(refreshFrame);
+
     if (!video || !guides) return;
     var ct = video.currentTime;
     for (var i = 0; i < guides.length; i++) {
