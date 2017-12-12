@@ -78,7 +78,7 @@ refreshFrame();
 
 function refreshFrame() {
     if(video && video.ended){
-        window.location.href = 'land-page.html';
+        window.location.replace('playable-landpage.html');
         return;
     }
     requestAnimationFrame(refreshFrame);

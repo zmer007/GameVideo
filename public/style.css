@@ -11,6 +11,7 @@
 }
 
 #info {
+  display: none;
   font-size: 1em;
   color: #000000;
   background: #ffffff;
