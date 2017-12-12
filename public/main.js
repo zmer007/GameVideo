@@ -101,8 +101,6 @@ function refreshFrame() {
 
 function onClicked() {
     log('onClicked: NO')
-    console.log(downX, downY)
-    console.log(cursor.event[0].block)
     if (actionAble && !cursor.passed && cursor.event[0].action[4]) {
         log('onClicked: YES')
         passCursor();

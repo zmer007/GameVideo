@@ -9,9 +9,9 @@ body {
 
 .screen {
   position:  absolute;
-  width: 56.25vh;
+  width: 100vw;
   height: 100vh;
-  margin-left: calc(50vw - 28.125vh)
+  background: black;
 }
 
 .landscape-video {
