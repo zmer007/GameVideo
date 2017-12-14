@@ -223,8 +223,8 @@ function resetDwonXY() {
 }
 
 function log(msg) {
-    if (!infoText) {
-        infoText = document.getElementById('info');
-    }
-    infoText.innerHTML = msg;
+    // if (!infoText) {
+    //     infoText = document.getElementById('info');
+    // }
+    // infoText.innerHTML = msg;
 }
